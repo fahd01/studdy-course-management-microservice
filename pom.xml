@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>tn.esprit</groupId>
-    <artifactId>studdy-course-managment-microservice</artifactId>
+    <artifactId>studdy-course-management-microservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>studdy-course-managment-microservice</name>
     <description>studdy-course-managment-microservice</description>
