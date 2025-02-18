@@ -1,19 +1,26 @@
 package tn.esprit.studdycoursemanagmentmicroservice.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryId;
+    private long id;
     private String name;
     private String description;
     private LocalDateTime created_at;
-    private LocalDateTime updated_at;
-
-    //private int parent_category_id;
+    @OneToMany(mappedBy = "category")
+    private List<Course>courses ;
 }

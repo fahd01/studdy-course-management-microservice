@@ -1,6 +1,6 @@
 package tn.esprit.studdycoursemanagmentmicroservice.entities;
 
-public enum DifficultyLevel {
+public enum Level {
     BEGINNER,
     INTERMEDIATE,
     ADVANCED,

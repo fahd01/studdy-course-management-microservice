@@ -1,30 +1,39 @@
 package tn.esprit.studdycoursemanagmentmicroservice.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseId;
+    private long id;
     private String title;
     private String description;
-
-    private int instructorId;
-    private String thumbnail_url;
+    private String thumbnailUrl;
+    @Enumerated(EnumType.STRING)
     private CourseStatus status;
-    private LocalDateTime created_at;
-    private LocalDateTime upadted_at;
-    private DecimalFormat price;
+    @CreatedDate
+    private LocalDateTime createdAt;
+    private float price;
     private int duration;
-    private DifficultyLevel difficultyLevel;
-    private DecimalFormat average_rating;
-    private int total_enrollements;
+    @Enumerated(EnumType.STRING)
+    private Level Level;
+    //private float Rating;
+    //private int totalEnrollements;
 
+    @ManyToOne
+    private Category category;
 
 }

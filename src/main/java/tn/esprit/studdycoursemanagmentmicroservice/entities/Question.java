@@ -1,23 +1,33 @@
 package tn.esprit.studdycoursemanagmentmicroservice.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int questionId;
+    private long id;
     private String question_text;
-    private QuestionType questionType;
     private String CorrectAnswer;
-    private DecimalFormat points;
+    private float points;
     private LocalDateTime created_at;
-    private LocalDateTime updated_at;
 
-    private int quizId;
+    @OneToMany
+    private List<Choix> choices;
+    @ManyToMany(mappedBy = "questions")
+
+    private List<Quiz>quizzes;
 
 }
