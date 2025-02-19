@@ -1,22 +1,35 @@
 package tn.esprit.studdycoursemanagmentmicroservice.services;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.Course;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.CourseRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CourseService {
     private final CourseRepository courseRepository;
     public List<Course> getAll(){
        return this.courseRepository.findAll();
-
     }
 
+    public Course getById(long id){
+       return this.courseRepository.findById(id).get();
+    }
+    public Course addCourse(Course c){
+        return this.courseRepository.save(c);
+    }
 
+    public void removeCourse(long id){
+        this.courseRepository.deleteById(id);
+    }
+
+    public Course updateCourse(Course course){
+        return this.courseRepository.save(course);
+    }
 
 
 
