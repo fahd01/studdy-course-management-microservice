@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 @Entity
@@ -21,9 +22,9 @@ public class Module {
     private long id;
     private String title;
     private String description;
-    private int order;
-    private LocalDateTime creaeted_at;
-    private LocalDateTime updated_at;
+    private int position;
+    @CreatedDate
+    private LocalDateTime created_at;
 
-    private int course_id;
+    //private int course_id;
 }

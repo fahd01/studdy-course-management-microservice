@@ -1,5 +1,6 @@
 package tn.esprit.studdycoursemanagmentmicroservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class Category {
     private String name;
     private String description;
     private LocalDateTime created_at;
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Course>courses ;
 }
