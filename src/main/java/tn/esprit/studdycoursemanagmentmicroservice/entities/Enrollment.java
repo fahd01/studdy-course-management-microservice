@@ -22,5 +22,6 @@ public class Enrollment {
     private CompletionStatus completionStatus;
     private LocalDateTime completion_date;
 
-
+@OneToOne
+    private Progress progress;
 }

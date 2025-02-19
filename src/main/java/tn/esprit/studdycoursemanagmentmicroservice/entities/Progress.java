@@ -1,9 +1,6 @@
 package tn.esprit.studdycoursemanagmentmicroservice.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,15 +16,18 @@ public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Enumerated(EnumType.STRING)
     private String progressStatus;
     private LocalDateTime started_at;
     private LocalDateTime completed_at;
 
 
-
-    private int enrollmentId;
-    private int moduleId;
-    private int lessonId;
+    @OneToOne(mappedBy = "progress")
+    private Enrollment enrollment;
+    @OneToOne(mappedBy = "progress")
+    private Course course;
+    @OneToOne(mappedBy = "progress")
+    private Lesson lesson;
 
 
 

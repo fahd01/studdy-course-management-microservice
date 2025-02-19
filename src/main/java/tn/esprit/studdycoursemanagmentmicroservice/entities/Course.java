@@ -35,5 +35,6 @@ public class Course {
 
     @ManyToOne
     private Category category;
-
+    @OneToOne
+    private Progress progress;
 }
