@@ -24,10 +24,8 @@ public class Lesson {
     private ContentType contentType;
     private String content_url;
     private int duration;
-    private int order;
+    private int position;
     private LocalDateTime created_at;
-    private LocalDateTime updated_at;
 
-    private int module_id;
-
+    //private int module_id;
 }
