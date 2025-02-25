@@ -20,6 +20,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
+    @Lob
     private String description;
     private String thumbnailUrl;
     @Enumerated(EnumType.STRING)
