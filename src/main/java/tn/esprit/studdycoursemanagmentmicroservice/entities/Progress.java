@@ -16,7 +16,6 @@ public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Enumerated(EnumType.STRING)
     private String progressStatus;
     private LocalDateTime started_at;
     private LocalDateTime completed_at;
