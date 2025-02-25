@@ -21,12 +21,12 @@ public class QuestionController {
     }
     @GetMapping("/{id}")
     public Question getById(@PathVariable long id){return questionService.getById(id);}
-    @PostMapping("/add-question")
-    public Question addQuestion(@RequestBody Question q) {return questionService.addQuestion(q);}
+    @PostMapping
+    public Question addQuestion(@RequestBody Question question) {return questionService.addQuestion(question);}
     @DeleteMapping
     public void deleteQuestion(long id){questionService.removeQuestion(id);}
-    @PutMapping("/update-question")
-    public Question updateQuestion(@RequestBody Question q){return questionService.updateQuestion(q);}
+    @PutMapping
+    public Question updateQuestion(@RequestBody Question question){return questionService.updateQuestion(question);}
 
 
 }

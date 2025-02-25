@@ -20,11 +20,11 @@ public class QuizController {
     }
     @GetMapping("/{id}")
     public Quiz getById(@PathVariable long id){return quizService.getById(id);}
-    @PostMapping("/add-quiz")
-    public Quiz addQuiz(@RequestBody Quiz q) {return quizService.addQuiz(q);}
+    @PostMapping
+    public Quiz addQuiz(@RequestBody Quiz quiz) {return quizService.addQuiz(quiz);}
     @DeleteMapping
     public void deleteQuiz(long id){quizService.removeQuiz(id);}
-    @PutMapping("/update-quiz")
-    public Quiz updateQuiz(@RequestBody Quiz q){return quizService.updateQuiz(q);}
+    @PutMapping
+    public Quiz updateQuiz(@RequestBody Quiz quiz){return quizService.updateQuiz(quiz);}
 
 }

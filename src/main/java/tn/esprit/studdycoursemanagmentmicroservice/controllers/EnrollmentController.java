@@ -20,11 +20,11 @@ public class EnrollmentController {
     }
     @GetMapping("/{id}")
     public Enrollment getById(@PathVariable long id){return enrollmentService.getById(id);}
-    @PostMapping("/add-enrollment")
+    @PostMapping
     public Enrollment addEnrollment(@RequestBody Enrollment e) {return enrollmentService.addEnrollment(e);}
     @DeleteMapping
     public void deleteCourse(long id){enrollmentService.removeEnrollment(id);}
-    @PutMapping("/update-enrollment")
+    @PutMapping
     public Enrollment updateEnrollment(@RequestBody Enrollment enrollment){return enrollmentService.updateEnrollment(enrollment);}
 
 

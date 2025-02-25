@@ -20,11 +20,11 @@ public class LessonController {
     }
     @GetMapping("/{id}")
     public Lesson getById(@PathVariable long id){return lessonService.getById(id);}
-    @PostMapping("/add-lesson")
-    public Lesson addLesson(@RequestBody Lesson l) {return lessonService.addLesson(l);}
+    @PostMapping
+    public Lesson addLesson(@RequestBody Lesson lesson) {return lessonService.addLesson(lesson);}
     @DeleteMapping
     public void deleteLesson(long id){lessonService.removeLesson(id);}
-    @PutMapping("/update-lesson")
-    public Lesson updateLesson(@RequestBody Lesson l){return lessonService.updateLesson(l);}
+    @PutMapping
+    public Lesson updateLesson(@RequestBody Lesson lesson){return lessonService.updateLesson(lesson);}
 
 }
