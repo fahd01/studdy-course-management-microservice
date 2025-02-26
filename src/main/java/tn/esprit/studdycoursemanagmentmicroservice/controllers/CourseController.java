@@ -38,8 +38,8 @@ public class CourseController {
     public Course getById(@PathVariable long id){return courseService.getById(id);}
     @PostMapping
     public Course addCourse(@RequestBody Course course) {return courseService.addCourse(course);}
-    @DeleteMapping
-    public void deleteCourse(long id){courseService.removeCourse(id);}
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable long id){courseService.removeCourse(id);}
     @PutMapping
     public Course updateCourse(@RequestBody Course course){return courseService.updateCourse(course);}
 

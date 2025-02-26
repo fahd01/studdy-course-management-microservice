@@ -8,7 +8,6 @@ import tn.esprit.studdycoursemanagmentmicroservice.entities.Course;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.CourseRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +29,7 @@ public class CourseService {
     }
 
     public Course updateCourse(Course course){
+        org.springframework.util.Assert.notNull(course.getId(), "Course Id should not be null in update operation");
         return this.courseRepository.save(course);
     }
 
