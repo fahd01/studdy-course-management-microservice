@@ -2,10 +2,9 @@ package tn.esprit.studdycoursemanagmentmicroservice.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.Category;
-import tn.esprit.studdycoursemanagmentmicroservice.entities.Enrollment;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.CategoryRepository;
-import tn.esprit.studdycoursemanagmentmicroservice.repositories.EnrollmentRepository;
 
 import java.util.List;
 
@@ -30,6 +29,7 @@ public class CategoryService {
     }
 
     public Category updateCategory(Category category) {
+        Assert.notNull(category.getId(), "The category passed for update has a null ID");
         return this.categoryRepository.save(category);
     }
 
