@@ -10,7 +10,7 @@ import tn.esprit.studdycoursemanagmentmicroservice.services.EnrollmentService;
 import java.util.List;
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
     @GetMapping
@@ -19,11 +19,11 @@ public class CategoryController {
     }
     @GetMapping("/{id}")
     public Category getById(@PathVariable long id){return categoryService.getById(id);}
-    @PostMapping("/add-category")
-    public Category addCategory(@RequestBody Category c) {return categoryService.addCategory(c);}
-    @DeleteMapping
-    public void deleteCategory(long id){categoryService.removeCategory(id);}
-    @PutMapping("/update-category")
+    @PostMapping
+    public Category addCategory(@RequestBody Category category) {return categoryService.addCategory(category);}
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable long id){categoryService.removeCategory(id);}
+    @PutMapping
     public Category updateCategory(@RequestBody Category category){return categoryService.updateCategory(category);}
 
 }
