@@ -3,6 +3,7 @@ package tn.esprit.studdycoursemanagmentmicroservice.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.Course;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.CourseRepository;
@@ -33,8 +34,14 @@ public class CourseService {
         return this.courseRepository.save(course);
     }
 
-    public List<Course> filterCourses(){
-        return List.of();
+    public List<Course> filterCourses(List<Long> categoryIds, List<String> levels, String searchQuery){
+        Specification filterByCategories = CourseSearchSpecification.categoryIdIn(categoryIds);
+        Specification filterByLevels = CourseSearchSpecification.levelIn(levels);
+        Specification filterByTitleAndDescription = CourseSearchSpecification.titleOrDescriptionLike(searchQuery);
+
+        Specification spec = filterByTitleAndDescription.and(filterByCategories).and(filterByLevels);
+
+        return courseRepository.findAll(spec);
     }
 
     public Page<Course> paginateCourses(Pageable pageable) {

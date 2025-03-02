@@ -30,7 +30,7 @@ public class Course {
     private float price;
     private int duration;
     @Enumerated(EnumType.STRING)
-    private Level Level;
+    private Level level;
     //private float Rating;
     //private int totalEnrollements;
 

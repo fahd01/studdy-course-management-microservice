@@ -21,6 +21,15 @@ public class CourseController {
         return courseService.getAll();
     }
 
+    @GetMapping("/filter")
+    public List<Course> filterCourses(
+            @RequestParam(required = false) List<Long> categoryId,
+            @RequestParam(required = false) List<String> level,
+            @RequestParam(required = false) String query
+    ){
+        return courseService.filterCourses(categoryId, level, query);
+    }
+
     @GetMapping("/paged")
     public Page<Course> getAllPaged(
             @RequestParam(defaultValue = "0") int page,
