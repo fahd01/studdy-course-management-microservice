@@ -22,26 +22,21 @@ public class CourseController {
     }
 
     @GetMapping("/filter")
-    public List<Course> filterCourses(
+    public Page<Course> filterCourses(
+            // Filtering
             @RequestParam(required = false) List<Long> categoryId,
             @RequestParam(required = false) List<String> level,
-            @RequestParam(required = false) String query
-    ){
-        return courseService.filterCourses(categoryId, level, query);
-    }
-
-    @GetMapping("/paged")
-    public Page<Course> getAllPaged(
+            @RequestParam(required = false) String query,
+            // Pagination
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending
-    ) {
+    ){
         Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return courseService.paginateCourses(pageable);
+        return courseService.filterCourses(pageable, categoryId, level, query);
     }
-
 
     @GetMapping("/{id}")
     public Course getById(@PathVariable long id){return courseService.getById(id);}
