@@ -6,14 +6,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.Course;
+import tn.esprit.studdycoursemanagmentmicroservice.entities.Enrollment;
+import tn.esprit.studdycoursemanagmentmicroservice.entities.User;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.CourseRepository;
+import tn.esprit.studdycoursemanagmentmicroservice.repositories.EnrollmentRepository;
+import tn.esprit.studdycoursemanagmentmicroservice.repositories.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
+    private final EnrollmentRepository enrollmentRepository;
+
     public List<Course> getAll(){
        return this.courseRepository.findAll();
     }
@@ -42,6 +50,17 @@ public class CourseService {
         Specification spec = filterByTitleAndDescription.and(filterByCategories).and(filterByLevels);
 
         return courseRepository.findAll(spec, pageable);
+    }
+
+    // TODO move to enrollment service ?
+    public void enroll(Long courseId, Long userId) {
+        Enrollment enrolment = new Enrollment();
+        User user = userRepository.findById(userId).get();
+        Course course = this.getById(courseId);
+        enrolment.setUser(user);
+        enrolment.setCourse(course);
+        enrolment.setEnrollmentDate(LocalDateTime.now());
+        enrollmentRepository.save(enrolment);
     }
 
 }

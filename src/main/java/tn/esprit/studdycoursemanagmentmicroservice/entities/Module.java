@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -22,9 +26,16 @@ public class Module {
     private long id;
     private String title;
     private String description;
-    private int position;
+    private ContentType contentType;
+    private String contentUrl;
+    private Integer duration;
+    private Integer position;
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
-    //private int course_id;
+    @ManyToOne
+    private Course course;
+
+    @OneToMany(mappedBy = "module")
+    private List<ModuleCompletion> completions;
 }

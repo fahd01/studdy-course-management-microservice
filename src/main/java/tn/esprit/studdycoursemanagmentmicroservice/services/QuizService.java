@@ -2,9 +2,7 @@ package tn.esprit.studdycoursemanagmentmicroservice.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.studdycoursemanagmentmicroservice.entities.Lesson;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.Quiz;
-import tn.esprit.studdycoursemanagmentmicroservice.repositories.LessonRepository;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.QuizRepository;
 
 import java.util.List;

@@ -20,11 +20,11 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int rating;
-    private String review_text;
+    private String reviewText;
     private LocalDateTime reviewDate;
     private ReviewStatus reviewStatus;
 
 
-    private int courseId;
-    private int userId;
+    //private int courseId;
+    //private int userId;
 }

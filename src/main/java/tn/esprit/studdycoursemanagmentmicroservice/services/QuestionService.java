@@ -21,17 +21,14 @@ public class QuestionService {
         return this.questionRepository.findById(id).get();
     }
 
-    public Question addQuestion(Question question){
+    public Question add(Question question){
         return this.questionRepository.save(question);
     }
 
-    public void removeQuestion(long id){
-        this.questionRepository.deleteById(id);
-    }
+    public void delete(long id){ this.questionRepository.deleteById(id);}
 
-    public Question updateQuestion(Question question) {
+    public Question update(Question question) {
         return this.questionRepository.save(question);
     }
-
 
 }

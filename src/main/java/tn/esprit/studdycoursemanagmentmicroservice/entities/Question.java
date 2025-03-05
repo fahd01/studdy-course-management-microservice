@@ -19,15 +19,12 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String question_text;
-    private String CorrectAnswer;
+    private String question;
     private float points;
-    private LocalDateTime created_at;
 
     @OneToMany
-    private List<Choix> choices;
+    private List<Answer> choices;
     @ManyToMany(mappedBy = "questions")
-
     private List<Quiz>quizzes;
 
 }

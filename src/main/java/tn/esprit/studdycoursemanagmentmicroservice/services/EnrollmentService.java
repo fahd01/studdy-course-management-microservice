@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EnrollmentService {
     private final EnrollmentRepository enrollmentRepository;
+
     public List<Enrollment> getAll(){
         return this.enrollmentRepository.findAll();
     }
@@ -33,7 +34,8 @@ public class EnrollmentService {
         return this.enrollmentRepository.save(enrollment);
     }
 
-
-
+    public Enrollment getByUserIdAndCourseId(Long userId, Long courseId){
+        return this.enrollmentRepository.findByUserIdAndCourseId(userId, courseId).orElseGet( () ->  null );
+    }
 
 }

@@ -20,11 +20,8 @@ public class Certificate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private LocalDateTime issueDate;
-    private String certificate_url;
+    private String certificateUrl;
 
-
-
-    private int enrollmentId;
-    private int userId;
-    private int courseId;
+    // TODO Relationship with enrollment
+    //private int enrollmentId;
 }

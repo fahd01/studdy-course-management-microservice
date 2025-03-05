@@ -21,11 +21,12 @@ public class Quiz {
     private long id;
     private String title;
     private String description;
-    private int passing_score;
-    private int time_limit;
-    private LocalDateTime created_at;
+    private Integer passingScore;
+    private Integer timeLimit;
+    // TODO Consider @OneToMany for simpler implementation
     @ManyToMany
     private List<Question> questions;
 
+    // TODO relationship with course, module
     //private int module_id;
 }

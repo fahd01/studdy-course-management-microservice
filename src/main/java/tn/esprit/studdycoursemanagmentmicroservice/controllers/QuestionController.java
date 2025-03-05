@@ -22,11 +22,11 @@ public class QuestionController {
     @GetMapping("/{id}")
     public Question getById(@PathVariable long id){return questionService.getById(id);}
     @PostMapping
-    public Question addQuestion(@RequestBody Question question) {return questionService.addQuestion(question);}
-    @DeleteMapping
-    public void deleteQuestion(long id){questionService.removeQuestion(id);}
+    public Question addQuestion(@RequestBody Question question) {return questionService.add(question);}
+    @DeleteMapping("/{id}")
+    public void deleteQuestion(@PathVariable long id){questionService.delete(id);}
     @PutMapping
-    public Question updateQuestion(@RequestBody Question question){return questionService.updateQuestion(question);}
+    public Question updateQuestion(@RequestBody Question question){return questionService.update(question);}
 
 
 }

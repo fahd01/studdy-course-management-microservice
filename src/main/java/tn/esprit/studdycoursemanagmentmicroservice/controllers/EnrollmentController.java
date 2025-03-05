@@ -27,5 +27,4 @@ public class EnrollmentController {
     @PutMapping
     public Enrollment updateEnrollment(@RequestBody Enrollment enrollment){return enrollmentService.updateEnrollment(enrollment);}
 
-
 }

@@ -17,11 +17,17 @@ public class Enrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDateTime enrollment_date;
-    @Enumerated(EnumType.STRING)
-    private CompletionStatus completionStatus;
-    private LocalDateTime completion_date;
+    private LocalDateTime enrollmentDate;
 
-@OneToOne
-    private Progress progress;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Course course;
+
+    //@Enumerated(EnumType.STRING)
+    //private CompletionStatus completionStatus;
+    //private LocalDateTime completion_date;
+
+    //@OneToOne
+    //private Progress progress;
 }

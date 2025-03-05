@@ -7,7 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.Course;
+import tn.esprit.studdycoursemanagmentmicroservice.entities.Enrollment;
+import tn.esprit.studdycoursemanagmentmicroservice.services.CourseProgressService;
 import tn.esprit.studdycoursemanagmentmicroservice.services.CourseService;
+import tn.esprit.studdycoursemanagmentmicroservice.services.EnrollmentService;
 
 import java.util.List;
 
@@ -15,7 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/courses")
 public class CourseController {
+
     private final CourseService courseService;
+    private final CourseProgressService courseProgressService;
+
+    private final EnrollmentService enrollmentService;
+
     @GetMapping
     public List<Course> getAll(){
         return courseService.getAll();
@@ -46,5 +54,19 @@ public class CourseController {
     public void deleteCourse(@PathVariable long id){courseService.removeCourse(id);}
     @PutMapping
     public Course updateCourse(@RequestBody Course course){return courseService.updateCourse(course);}
+
+    @GetMapping("/{id}/users/{userId}/progress")
+    public Double getProgress(@PathVariable Long id, @PathVariable Long userId){
+        return this.courseProgressService.getCourseProgress(userId, id);
+    }
+
+    @PostMapping("/{id}/users/{userId}")
+    public void enroll(@PathVariable Long id, @PathVariable Long userId){
+        this.courseService.enroll(id, userId);
+    }
+    @GetMapping("/{id}/users/{userId}/enrollments")
+    public Enrollment getEnrollment(@PathVariable Long id, @PathVariable Long userId){
+        return this.enrollmentService.getByUserIdAndCourseId(userId, id);
+    }
 
 }
