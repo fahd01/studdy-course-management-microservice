@@ -31,6 +31,7 @@ public class Course {
     private int duration;
     @Enumerated(EnumType.STRING)
     private Level level;
+    // TODO is live
     //private float Rating;
     //private int totalEnrollements;
 
