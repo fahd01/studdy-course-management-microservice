@@ -22,8 +22,8 @@ public class Question {
     private String question;
     private float points;
 
-    @OneToMany
-    private List<Answer> choices;
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers;
     @ManyToMany(mappedBy = "questions")
     private List<Quiz>quizzes;
 

@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.Course;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CourseSearchSpecification {
 
@@ -31,6 +32,13 @@ public class CourseSearchSpecification {
                                 builder.like(root.get("title"), "%" + searchQuery + "%"),
                                 builder.like(root.get("description"), "%" + searchQuery + "%")
                         );
+    }
+
+    public static Specification<Course> enrolledUser(Integer userId) {
+        return (root, query, builder) ->
+                Objects.isNull(userId) ?
+                        builder.conjunction() :
+                        builder.equal(root.get("enrollments").get("user").get("id"), userId);
     }
 
 }

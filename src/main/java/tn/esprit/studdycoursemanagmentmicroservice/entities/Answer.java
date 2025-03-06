@@ -17,5 +17,6 @@ public class Answer {
     private Long id;
     private String text;
     private boolean correct;
-
+    @ManyToOne
+    private Question question;
 }

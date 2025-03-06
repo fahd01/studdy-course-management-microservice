@@ -23,5 +23,6 @@ public class Certificate {
     private String certificateUrl;
 
     // TODO Relationship with enrollment
-    //private int enrollmentId;
+    //@OneToOne
+    //private Enrollment enrollment;
 }

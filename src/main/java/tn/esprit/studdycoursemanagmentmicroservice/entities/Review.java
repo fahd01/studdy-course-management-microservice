@@ -24,7 +24,9 @@ public class Review {
     private LocalDateTime reviewDate;
     private ReviewStatus reviewStatus;
 
-
-    //private int courseId;
-    //private int userId;
+    // @TODO Relationship
+    //@OneToOne
+    //private Course course;
+    //@OneToOne
+    //private User user;
 }

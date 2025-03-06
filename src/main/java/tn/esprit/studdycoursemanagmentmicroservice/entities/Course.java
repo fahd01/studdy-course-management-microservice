@@ -44,7 +44,7 @@ public class Course {
 
     @JsonIgnore
     @OneToMany(mappedBy = "course")
-    private List<Enrollment> enrolments;
+    private List<Enrollment> enrollments;
 
     @OneToMany(mappedBy = "course")
     private List<Module> modules;

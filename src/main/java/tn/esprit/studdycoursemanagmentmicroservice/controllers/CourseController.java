@@ -35,6 +35,7 @@ public class CourseController {
             @RequestParam(required = false) List<Long> categoryId,
             @RequestParam(required = false) List<String> level,
             @RequestParam(required = false) String query,
+            @RequestParam(required = false) Integer enrolledUserId,
             // Pagination
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -43,7 +44,7 @@ public class CourseController {
     ){
         Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return courseService.filterCourses(pageable, categoryId, level, query);
+        return courseService.filterCourses(pageable, categoryId, level, query, enrolledUserId);
     }
 
     @GetMapping("/{id}")

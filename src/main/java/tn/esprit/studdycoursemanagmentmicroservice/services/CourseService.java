@@ -42,12 +42,13 @@ public class CourseService {
         return this.courseRepository.save(course);
     }
 
-    public Page<Course> filterCourses(Pageable pageable, List<Long> categoryIds, List<String> levels, String searchQuery){
+    public Page<Course> filterCourses(Pageable pageable, List<Long> categoryIds, List<String> levels, String searchQuery, Integer userId){
         Specification filterByCategories = CourseSearchSpecification.categoryIdIn(categoryIds);
         Specification filterByLevels = CourseSearchSpecification.levelIn(levels);
         Specification filterByTitleAndDescription = CourseSearchSpecification.titleOrDescriptionLike(searchQuery);
+        Specification filterByEnrolledUser = CourseSearchSpecification.enrolledUser(userId);
 
-        Specification spec = filterByTitleAndDescription.and(filterByCategories).and(filterByLevels);
+        Specification spec = filterByTitleAndDescription.and(filterByCategories).and(filterByLevels).and(filterByEnrolledUser);
 
         return courseRepository.findAll(spec, pageable);
     }

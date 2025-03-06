@@ -28,5 +28,4 @@ public class Quiz {
     private List<Question> questions;
 
     // TODO relationship with course, module
-    //private int module_id;
 }

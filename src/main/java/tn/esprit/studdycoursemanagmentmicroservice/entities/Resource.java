@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 @Entity
@@ -21,7 +22,8 @@ public class Resource {
     private long id;
     private String title;
     private String description;
-    private String ressource_url;
-    private LocalDateTime created_at;
+    private String resourceUrl;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
 }
