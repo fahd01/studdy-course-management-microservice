@@ -7,6 +7,4 @@ import tn.esprit.studdycoursemanagmentmicroservice.entities.Course;
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long>, JpaSpecificationExecutor<Course> {
 
-
-
 }

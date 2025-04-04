@@ -10,6 +10,7 @@ import tn.esprit.studdycoursemanagmentmicroservice.entities.Enrollment;
 import tn.esprit.studdycoursemanagmentmicroservice.entities.User;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.CourseRepository;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.EnrollmentRepository;
+import tn.esprit.studdycoursemanagmentmicroservice.repositories.ModuleRepository;
 import tn.esprit.studdycoursemanagmentmicroservice.repositories.UserRepository;
 
 import java.time.LocalDateTime;
@@ -63,5 +64,4 @@ public class CourseService {
         enrolment.setEnrollmentDate(LocalDateTime.now());
         enrollmentRepository.save(enrolment);
     }
-
 }

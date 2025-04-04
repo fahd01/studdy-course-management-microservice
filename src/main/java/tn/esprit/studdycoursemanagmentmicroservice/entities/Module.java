@@ -26,8 +26,6 @@ public class Module {
     private long id;
     private String title;
     private String description;
-    private ContentType contentType;
-    private String contentUrl;
     private Integer duration;
     private Integer position;
     @CreatedDate
@@ -38,4 +36,6 @@ public class Module {
 
     @OneToMany(mappedBy = "module")
     private List<ModuleCompletion> completions;
+    @OneToMany
+    private List<ModuleContent> contents;
 }

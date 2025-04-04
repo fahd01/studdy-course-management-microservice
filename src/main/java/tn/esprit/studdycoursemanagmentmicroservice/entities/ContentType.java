@@ -4,6 +4,5 @@ public enum ContentType {
     VIDEO,
     TEXT,
     PDF,
-    QUIZ,
     PPT
 }
