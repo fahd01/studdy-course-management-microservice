@@ -43,11 +43,10 @@ public class Module {
     private Course course;
 
     @OneToMany(mappedBy = "module")
+    @JsonIgnore
     private List<ModuleCompletion> completions;
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
     private List<ModuleAttachment> attachments;
-    //@OneToMany
-    //private List<ModuleContent> contents;
 
     @Override
     public String toString() {

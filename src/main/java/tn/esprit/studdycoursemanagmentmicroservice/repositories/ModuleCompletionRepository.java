@@ -17,4 +17,12 @@ public interface ModuleCompletionRepository extends JpaRepository<ModuleCompleti
     @Query("SELECT COUNT(mc) FROM ModuleCompletion mc WHERE mc.user.id = :userId AND mc.module.course.id = :courseId AND mc.completed = true")
     int countCompletedModules(@Param("userId") Long userId, @Param("courseId") Long courseId);
 
+    List<ModuleCompletion> getModuleCompletionsByModuleIdAndUserId(Long moduleId, Long userId);
+
+    @Query("SELECT mc FROM ModuleCompletion mc " +
+            "WHERE mc.user.id = :userId " +
+            "AND mc.module.course.id = :courseId")
+    List<ModuleCompletion> findByUserIdAndCourseId(@Param("userId") Long userId,
+                                                   @Param("courseId") Long courseId);
+
 }

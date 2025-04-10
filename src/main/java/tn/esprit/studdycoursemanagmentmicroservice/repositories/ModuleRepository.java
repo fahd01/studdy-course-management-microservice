@@ -10,4 +10,5 @@ import java.util.List;
 public interface ModuleRepository extends JpaRepository<Module, Long> {
     int countByCourseId(Long courseId);
     List<Module> getModulesByCourseId(Long courseId);
+
 }

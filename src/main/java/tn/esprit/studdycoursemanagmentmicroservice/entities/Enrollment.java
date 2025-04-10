@@ -1,5 +1,6 @@
 package tn.esprit.studdycoursemanagmentmicroservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +21,10 @@ public class Enrollment {
     private LocalDateTime enrollmentDate;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
     @ManyToOne
+    @JsonIgnore
     private Course course;
 
     //@Enumerated(EnumType.STRING)

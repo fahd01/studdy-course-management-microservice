@@ -16,6 +16,7 @@ import tn.esprit.studdycoursemanagmentmicroservice.services.CourseProgressServic
 import tn.esprit.studdycoursemanagmentmicroservice.services.CourseService;
 import tn.esprit.studdycoursemanagmentmicroservice.services.EnrollmentService;
 import tn.esprit.studdycoursemanagmentmicroservice.services.ModuleAttachmentService;
+import tn.esprit.studdycoursemanagmentmicroservice.services.ModuleCompletionService;
 import tn.esprit.studdycoursemanagmentmicroservice.services.ModuleService;
 
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class CourseController {
     private final EnrollmentService enrollmentService;
     private final ModuleService moduleService;
     private final ModuleAttachmentService moduleAttachmentService;
+    private final ModuleCompletionService moduleCompletionService;
 
     @GetMapping
     public List<Course> getAll(){
@@ -93,6 +95,11 @@ public class CourseController {
         return this.moduleService.getModulesByCourseId(id);
     }
 
+    @GetMapping("/{id}/modules/{moduleId}")
+    public Module getModule(@PathVariable Long moduleId){
+        return this.moduleService.getById(moduleId);
+    }
+
     @PostMapping("/{id}/modules")
     public Module createModule(@PathVariable Long id, @RequestBody Module module) {
         Course course = courseService.getById(id);
@@ -103,6 +110,15 @@ public class CourseController {
     @DeleteMapping("/{id}/modules/{moduleId}")
     public void deleteModule(@PathVariable Long id, @PathVariable Long moduleId){
         this.moduleService.delete(moduleId);
+    }
+
+    @GetMapping("/{id}/users/{userId}/completions")
+    public List<Long> getCompletedModules(@PathVariable Long id, @PathVariable Long userId){
+        return this.moduleCompletionService
+                .getByCourseIdAndUserId(id, userId)
+                .stream()
+                .map(moduleCompletion -> moduleCompletion.getModule().getId())
+                .toList();
     }
 
     @PostMapping("/{id}/modules/{moduleId}/upload")
