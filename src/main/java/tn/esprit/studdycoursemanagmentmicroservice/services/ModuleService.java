@@ -16,8 +16,12 @@ public class ModuleService {
         return this.moduleRepository.getModulesByCourseId(courseId);
     }
 
-    public void create(Module module) {
-        this.moduleRepository.save(module);
+    public Module getById(Long id) {
+        return this.moduleRepository.findById(id).get();
+    }
+
+    public Module create(Module module) {
+        return this.moduleRepository.save(module);
     }
 
     public void delete(Long id) {
