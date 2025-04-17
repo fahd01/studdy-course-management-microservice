@@ -1,18 +1,42 @@
-version: '3.8'
-
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: keycloak_mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: keycloak_db
-      MYSQL_USER: keycloak
-      MYSQL_PASSWORD: keycloak
+  studdy-course-management-microservice:
+    # Build the image from local
+    #build:
+    #  context: .
+    # Use the image from docker hub
+    image: fahdech/course-management-microservice:1.0.0
+    container_name: course-management-microservice
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+      - "8082:8082"
+      - "9001:9001"
+    environment:
+      SERVER_PORT: 8082
+      SPRING_DATASOURCE_URL: "jdbc:mysql://course-management-mysql:3306/course-management-db?createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: course-management
+      SPRING_DATASOURCE_PASSWORD: course-management-password
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin-server:8767
+    depends_on:
+      - course-management-mysql
+    networks:
+      - keycloak-net
+
+  eureka-server:
+    build:
+      context: ./infrastructure/eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - keycloak-net
+
+  spring-admin-server:
+    image: codecentric/spring-boot-admin:3.3.3
+    container_name: spring-admin-server
+    environment:
+      SERVER_PORT: 8767
+    ports:
+      - "8767:8767"
     networks:
       - keycloak-net
 
@@ -35,8 +59,52 @@ services:
     networks:
       - keycloak-net
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.2
+    container_name: studdy-phpmyadmin
+    ports:
+      - "9000:80"
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOSTS: course-management-mysql,mysql
+      PMA_USER: root
+      PMA_PASSWORD: root_password
+    depends_on:
+      - mysql
+      - course-management-mysql
+    networks:
+      - keycloak-net
+
+  course-management-mysql:
+    image: mysql:8.0
+    container_name: course-management-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: course-management-db
+      MYSQL_USER: course-management
+      MYSQL_PASSWORD: course-management-password
+    volumes:
+      - course-management-mysql-data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - keycloak-net
+
+  mysql:
+    image: mysql:8.0
+    container_name: keycloak_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: keycloak_db
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: keycloak
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - keycloak-net
+
 volumes:
   mysql_data:
+  course-management-mysql-data:
 
 networks:
   keycloak-net:

@@ -2,9 +2,15 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
 WORKDIR /app
-COPY . .
+# Create dependency cache layer
+COPY pom.xml .
+RUN mkdir -p /root/.m2 && \
+    mvn dependency:go-offline -B
 
-RUN mvn clean package -DskipTests
+# Build application
+COPY src ./src
+RUN mvn package -DskipTests
+
 
 # ---- Run Stage ----
 FROM azul/zulu-openjdk-alpine:21
