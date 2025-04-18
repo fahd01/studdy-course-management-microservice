@@ -84,8 +84,6 @@ services:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
       EUREKA_INSTANCE_HOSTNAME: config-server
       SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin-server:8767
-    depends_on:
-      - eureka-server
     networks:
       - keycloak-net
 
