@@ -40,6 +40,7 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
     depends_on:
       - services-mysql
+      - config-server
     networks:
       - keycloak-net
 
@@ -61,6 +62,7 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
     depends_on:
       - services-mysql
+      - config-server
     networks:
       - keycloak-net
 
@@ -117,16 +119,16 @@ services:
     command: start-dev
     environment:
       KC_DB: mysql
-      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak_db
-      KC_DB_USERNAME: keycloak
-      KC_DB_PASSWORD: keycloak
+      KC_DB_URL: jdbc:mysql://keycloak-mysql:3306/keycloak_db
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: root_password
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HOSTNAME_STRICT: false
     ports:
       - "8080:8080"
     depends_on:
-      - mysql
+      - keycloak-mysql
     networks:
       - keycloak-net
 
@@ -137,11 +139,12 @@ services:
       - "9000:80"
     environment:
       PMA_ARBITRARY: 1
-      PMA_HOSTS: course-management-mysql,mysql,services-mysql
+      PMA_HOSTS: course-management-mysql,keycloak-mysql,services-mysql
       PMA_USER: root
       PMA_PASSWORD: root_password
     depends_on:
-      - mysql
+      - keycloak-mysql
+      - services-mysql
       - course-management-mysql
     networks:
       - keycloak-net
@@ -172,21 +175,21 @@ services:
     networks:
       - keycloak-net
 
-  mysql:
+  keycloak-mysql:
     image: mysql:8.0
-    container_name: keycloak_mysql
+    container_name: keycloak-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: keycloak_db
       MYSQL_USER: keycloak
       MYSQL_PASSWORD: keycloak
     volumes:
-      - mysql_data:/var/lib/mysql
+      - keycloak-mysql_data:/var/lib/mysql
     networks:
       - keycloak-net
 
 volumes:
-  mysql_data:
+  keycloak-mysql_data:
   course-management-mysql-data:
   services-mysql-data:
 
