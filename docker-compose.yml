@@ -15,9 +15,52 @@ services:
       SPRING_DATASOURCE_USERNAME: course-management
       SPRING_DATASOURCE_PASSWORD: course-management-password
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_HOSTNAME: studdy-course-management-microservice
       SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin-server:8767
     depends_on:
       - course-management-mysql
+    networks:
+      - keycloak-net
+
+  studdy-stage-management-microservice:
+    build:
+      context: ./services/studdy-stage-management-microservice
+    container_name: stage-management-microservice
+    ports:
+      - "8089:8089"
+      - "9003:9003"
+    environment:
+      SERVER_PORT: 8089
+      SPRING_DATASOURCE_URL: "jdbc:mysql://services-mysql:3306/stage-management-db?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root_password
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_HOSTNAME: studdy-stage-management-microservice
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin-server:8767
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+    depends_on:
+      - services-mysql
+    networks:
+      - keycloak-net
+
+  studdy-user-management-microservice:
+    build:
+      context: ./services/studdy-user-management-microservice
+    container_name: user-management-microservice
+    ports:
+      - "8081:8081"
+      - "9002:9002"
+    environment:
+      SERVER_PORT: 8081
+      SPRING_DATASOURCE_URL: "jdbc:mysql://services-mysql:3306/user-management-db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root_password
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_HOSTNAME: studdy-user-management-microservice
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin-server:8767
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+    depends_on:
+      - services-mysql
     networks:
       - keycloak-net
 
@@ -30,6 +73,22 @@ services:
     networks:
       - keycloak-net
 
+  config-server:
+    container_name: config-server
+    build:
+      context: ./infrastructure/config-server
+    ports:
+      - "8888:8888"
+      - "9004:9004"
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_HOSTNAME: config-server
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin-server:8767
+    depends_on:
+      - eureka-server
+    networks:
+      - keycloak-net
+
   spring-admin-server:
     image: codecentric/spring-boot-admin:3.3.3
     container_name: spring-admin-server
@@ -37,6 +96,20 @@ services:
       SERVER_PORT: 8767
     ports:
       - "8767:8767"
+    networks:
+      - keycloak-net
+
+  api-gateway:
+    build:
+      context: ./infrastructure/api-gateway
+    container_name: api-gateway
+    environment:
+      SERVER_PORT: 8768
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin-server:8767
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+    ports:
+      - "8768:8768"
     networks:
       - keycloak-net
 
@@ -66,7 +139,7 @@ services:
       - "9000:80"
     environment:
       PMA_ARBITRARY: 1
-      PMA_HOSTS: course-management-mysql,mysql
+      PMA_HOSTS: course-management-mysql,mysql,services-mysql
       PMA_USER: root
       PMA_PASSWORD: root_password
     depends_on:
@@ -85,7 +158,19 @@ services:
       MYSQL_PASSWORD: course-management-password
     volumes:
       - course-management-mysql-data:/var/lib/mysql
-      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - keycloak-net
+
+  services-mysql:
+    image: mysql:8.0
+    container_name: services-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: services-db
+      MYSQL_USER: services
+      MYSQL_PASSWORD: services-password
+    volumes:
+      - services-mysql-data:/var/lib/mysql
     networks:
       - keycloak-net
 
@@ -105,6 +190,7 @@ services:
 volumes:
   mysql_data:
   course-management-mysql-data:
+  services-mysql-data:
 
 networks:
   keycloak-net:
